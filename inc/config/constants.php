@@ -5,7 +5,7 @@
 	
 	// Database parameters
 	// Data source name
-	define('DSN', 'mysql:host=localhost;dbname=shop_inventory');
+	define('DSN', 'mysql:host=127.0.0.1;dbname=shop_inventory');
 	
 	// Hostname
 	define('DB_HOST', 'localhost');

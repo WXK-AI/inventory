@@ -13,8 +13,8 @@
 		
 		if(!empty($loginUsername) && !empty($loginUsername)){
 			
-			// Sanitize username
-			$loginUsername = filter_var($loginUsername, FILTER_SANITIZE_STRING);
+			// Normalize username input without using deprecated FILTER_SANITIZE_STRING
+			$loginUsername = trim(strip_tags($loginUsername));
 			
 			// Check if username is empty
 			if($loginUsername == ''){
@@ -28,19 +28,16 @@
 				exit();
 			}
 			
-			// Encrypt the password
-			$hashedPassword = md5($loginPassword);
-			
-			// Check the given credentials
-			$checkUserSql = 'SELECT * FROM user WHERE username = :username AND password = :password';
+			// Check the given username first, then verify the submitted password
+			// against the secure hash stored in the database.
+			$checkUserSql = 'SELECT * FROM user WHERE username = :username';
 			$checkUserStatement = $conn->prepare($checkUserSql);
-			$checkUserStatement->execute(['username' => $loginUsername, 'password' => $hashedPassword]);
+			$checkUserStatement->execute(['username' => $loginUsername]);
+			$row = $checkUserStatement->fetch(PDO::FETCH_ASSOC);
 			
 			// Check if user exists or not
-			if($checkUserStatement->rowCount() > 0){
+			if($row && password_verify($loginPassword, $row['password'])){
 				// Valid credentials. Hence, start the session
-				$row = $checkUserStatement->fetch(PDO::FETCH_ASSOC);
-
 				$_SESSION['loggedIn'] = '1';
 				$_SESSION['fullName'] = $row['fullName'];
 				

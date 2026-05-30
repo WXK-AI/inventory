@@ -3,20 +3,28 @@
 	require_once('../../inc/config/db.php');
 	
 	$resetPasswordUsername = '';
+	$resetPasswordCurrentPassword = '';
 	$resetPasswordPassword1 = '';
 	$resetPasswordPassword2 = '';
 	$hashedPassword = '';
 	
 	if(isset($_POST['resetPasswordUsername'])){
 		$resetPasswordUsername = htmlentities($_POST['resetPasswordUsername']);
+		$resetPasswordCurrentPassword = isset($_POST['resetPasswordCurrentPassword']) ? $_POST['resetPasswordCurrentPassword'] : '';
 		$resetPasswordPassword1 = htmlentities($_POST['resetPasswordPassword1']);
 		$resetPasswordPassword2 = htmlentities($_POST['resetPasswordPassword2']);
 		
-		if(!empty($resetPasswordUsername) && !empty($resetPasswordPassword1) && !empty($resetPasswordPassword2)){
+		if(!empty($resetPasswordUsername) && !empty($resetPasswordCurrentPassword) && !empty($resetPasswordPassword1) && !empty($resetPasswordPassword2)){
 			
 			// Check if username is empty
 			if($resetPasswordUsername == ''){
 				echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Please enter your username.</div>';
+				exit();
+			}
+			
+			// Check if current password is empty
+			if($resetPasswordCurrentPassword == ''){
+				echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Please enter your current password.</div>';
 				exit();
 			}
 			
@@ -30,10 +38,15 @@
 			$usernameCheckingSql = 'SELECT * FROM user WHERE username = :username';
 			$usernameCheckingStatement = $conn->prepare($usernameCheckingSql);
 			$usernameCheckingStatement->execute(['username' => $resetPasswordUsername]);
+			$user = $usernameCheckingStatement->fetch(PDO::FETCH_ASSOC);
 			
-			if($usernameCheckingStatement->rowCount() < 1){
+			if(!$user){
 				// Username doesn't exist. Hence can't reset password
 				echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Username does not exist.</div>';
+				exit();
+			} elseif(!password_verify($resetPasswordCurrentPassword, $user['password'])){
+				// Current password is incorrect. Hence, the account owner is not verified.
+				echo '<div class="alert alert-danger"><button type="button" class="close" data-dismiss="alert">&times;</button>Current password is incorrect.</div>';
 				exit();
 			} else {
 				// Check if passwords are equal
@@ -42,8 +55,8 @@
 					exit();
 				} else {
 					// Start UPDATING password to DB
-					// Encrypt the password
-					$hashedPassword = md5($resetPasswordPassword1);
+					// Hash the password using PHP's secure password hashing API
+					$hashedPassword = password_hash($resetPasswordPassword1, PASSWORD_DEFAULT);
 					$updatePasswordSql = 'UPDATE user SET password = :password WHERE username = :username';
 					$updatePasswordStatement = $conn->prepare($updatePasswordSql);
 					$updatePasswordStatement->execute(['password' => $hashedPassword, 'username' => $resetPasswordUsername]);

@@ -43,6 +43,7 @@ function register(){
 // Function to reset password
 function resetPassword(){
 	var resetPasswordUsername = $('#resetPasswordUsername').val();
+	var resetPasswordCurrentPassword = $('#resetPasswordCurrentPassword').val();
 	var resetPasswordPassword1 = $('#resetPasswordPassword1').val();
 	var resetPasswordPassword2 = $('#resetPasswordPassword2').val();
 	
@@ -51,6 +52,7 @@ function resetPassword(){
 		method: 'POST',
 		data: {
 			resetPasswordUsername:resetPasswordUsername,
+			resetPasswordCurrentPassword:resetPasswordCurrentPassword,
 			resetPasswordPassword1:resetPasswordPassword1,
 			resetPasswordPassword2:resetPasswordPassword2,
 		},

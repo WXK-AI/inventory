@@ -78,6 +78,10 @@ $action = '';
 						<input type="text" class="form-control" id="resetPasswordUsername" name="resetPasswordUsername">
 					  </div>
 					  <div class="form-group">
+						<label for="resetPasswordCurrentPassword">Current Password</label>
+						<input type="password" class="form-control" id="resetPasswordCurrentPassword" name="resetPasswordCurrentPassword">
+					  </div>
+					  <div class="form-group">
 						<label for="resetPasswordPassword1">New Password</label>
 						<input type="password" class="form-control" id="resetPasswordPassword1" name="resetPasswordPassword1">
 					  </div>

@@ -23,16 +23,24 @@
 	
 	// Create table rows from the selected data
 	while($row = $itemDetailsSearchStatement->fetch(PDO::FETCH_ASSOC)){
+		$productID = htmlspecialchars($row['productID'], ENT_QUOTES, 'UTF-8');
+		$itemNumber = htmlspecialchars($row['itemNumber'], ENT_QUOTES, 'UTF-8');
+		$itemName = htmlspecialchars($row['itemName'], ENT_QUOTES, 'UTF-8');
+		$discount = htmlspecialchars($row['discount'], ENT_QUOTES, 'UTF-8');
+		$stock = htmlspecialchars($row['stock'], ENT_QUOTES, 'UTF-8');
+		$unitPrice = htmlspecialchars($row['unitPrice'], ENT_QUOTES, 'UTF-8');
+		$status = htmlspecialchars($row['status'], ENT_QUOTES, 'UTF-8');
+		$description = htmlspecialchars($row['description'], ENT_QUOTES, 'UTF-8');
 		
 		$output .= '<tr>' .
-						'<td>' . $row['productID'] . '</td>' .
-						'<td>' . $row['itemNumber'] . '</td>' .
-						'<td><a href="#" class="itemDetailsHover" data-toggle="popover" id="' . $row['productID'] . '">' . $row['itemName'] . '</a></td>' .
-						'<td>' . $row['discount'] . '</td>' .
-						'<td>' . $row['stock'] . '</td>' .
-						'<td>' . $row['unitPrice'] . '</td>' .
-						'<td>' . $row['status'] . '</td>' .
-						'<td>' . $row['description'] . '</td>' .
+						'<td>' . $productID . '</td>' .
+						'<td>' . $itemNumber . '</td>' .
+						'<td><a href="#" class="itemDetailsHover" data-toggle="popover" id="' . $productID . '">' . $itemName . '</a></td>' .
+						'<td>' . $discount . '</td>' .
+						'<td>' . $stock . '</td>' .
+						'<td>' . $unitPrice . '</td>' .
+						'<td>' . $status . '</td>' .
+						'<td>' . $description . '</td>' .
 					'</tr>';
 	}
 	

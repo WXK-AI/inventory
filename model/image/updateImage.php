@@ -35,7 +35,7 @@
 						
 						$baseImageFolder = '../../data/item_images/';
 						$itemImageFolder = '';
-						$fileName = time() . '_' . basename($_FILES['itemImageFile']['name']);
+						$fileName = time() . '_' . bin2hex(random_bytes(8)) . '.' . $extension;
 						
 						// Create image folder for uploading images
 						$itemImageFolder = $baseImageFolder . $itemImageItemNumber . '/';
