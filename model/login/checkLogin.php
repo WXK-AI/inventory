@@ -7,11 +7,11 @@
 	$loginPassword = '';
 	$hashedPassword = '';
 	
-	if(isset($_POST['loginUsername'])){
+	if(isset($_POST['loginUsername'], $_POST['loginPassword'])){
 		$loginUsername = $_POST['loginUsername'];
 		$loginPassword = $_POST['loginPassword'];
 		
-		if(!empty($loginUsername) && !empty($loginUsername)){
+		if($loginUsername !== '' && $loginPassword !== ''){
 			
 			// Normalize username input without using deprecated FILTER_SANITIZE_STRING
 			$loginUsername = trim(strip_tags($loginUsername));
