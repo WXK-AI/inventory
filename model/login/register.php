@@ -8,13 +8,13 @@
 	$registerPassword2 = '';
 	$hashedPassword = '';
 	
-	if(isset($_POST['registerUsername'])){
+	if(isset($_POST['registerFullName'], $_POST['registerUsername'], $_POST['registerPassword1'], $_POST['registerPassword2'])){
 		$registerFullName = htmlentities($_POST['registerFullName']);
 		$registerUsername = htmlentities($_POST['registerUsername']);
-		$registerPassword1 = htmlentities($_POST['registerPassword1']);
-		$registerPassword2 = htmlentities($_POST['registerPassword2']);
+		$registerPassword1 = $_POST['registerPassword1'];
+		$registerPassword2 = $_POST['registerPassword2'];
 		
-		if(!empty($registerFullName) && !empty($registerUsername) && !empty($registerPassword1) && !empty($registerPassword2)){
+		if($registerFullName !== '' && $registerUsername !== '' && $registerPassword1 !== '' && $registerPassword2 !== ''){
 			
 			// Normalize name input without using deprecated FILTER_SANITIZE_STRING
 			$registerFullName = trim(strip_tags($registerFullName));

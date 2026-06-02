@@ -8,13 +8,13 @@
 	$resetPasswordPassword2 = '';
 	$hashedPassword = '';
 	
-	if(isset($_POST['resetPasswordUsername'])){
+	if(isset($_POST['resetPasswordUsername'], $_POST['resetPasswordCurrentPassword'], $_POST['resetPasswordPassword1'], $_POST['resetPasswordPassword2'])){
 		$resetPasswordUsername = htmlentities($_POST['resetPasswordUsername']);
-		$resetPasswordCurrentPassword = isset($_POST['resetPasswordCurrentPassword']) ? $_POST['resetPasswordCurrentPassword'] : '';
-		$resetPasswordPassword1 = htmlentities($_POST['resetPasswordPassword1']);
-		$resetPasswordPassword2 = htmlentities($_POST['resetPasswordPassword2']);
+		$resetPasswordCurrentPassword = $_POST['resetPasswordCurrentPassword'];
+		$resetPasswordPassword1 = $_POST['resetPasswordPassword1'];
+		$resetPasswordPassword2 = $_POST['resetPasswordPassword2'];
 		
-		if(!empty($resetPasswordUsername) && !empty($resetPasswordCurrentPassword) && !empty($resetPasswordPassword1) && !empty($resetPasswordPassword2)){
+		if($resetPasswordUsername !== '' && $resetPasswordCurrentPassword !== '' && $resetPasswordPassword1 !== '' && $resetPasswordPassword2 !== ''){
 			
 			// Check if username is empty
 			if($resetPasswordUsername == ''){

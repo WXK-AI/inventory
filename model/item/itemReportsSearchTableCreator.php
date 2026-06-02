@@ -23,16 +23,20 @@
 	
 	// Create table rows from the selected data
 	while($row = $itemDetailsSearchStatement->fetch(PDO::FETCH_ASSOC)){
+		$safeRow = array_map(function($value){
+			return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+		}, $row);
+
 		$output .= '<tr>' .
-						'<td>' . $row['productID'] . '</td>' .
-						'<td>' . $row['itemNumber'] . '</td>' .
-						//'<td>' . $row['itemName'] . '</td>' .
-						'<td><a href="#" class="itemDetailsHover" data-toggle="popover" id="' . $row['productID'] . '">' . $row['itemName'] . '</a></td>' .
-						'<td>' . $row['discount'] . '</td>' .
-						'<td>' . $row['stock'] . '</td>' .
-						'<td>' . $row['unitPrice'] . '</td>' .
-						'<td>' . $row['status'] . '</td>' .
-						'<td>' . $row['description'] . '</td>' .
+						'<td>' . $safeRow['productID'] . '</td>' .
+						'<td>' . $safeRow['itemNumber'] . '</td>' .
+						//'<td>' . $safeRow['itemName'] . '</td>' .
+						'<td><a href="#" class="itemDetailsHover" data-toggle="popover" id="' . $safeRow['productID'] . '">' . $safeRow['itemName'] . '</a></td>' .
+						'<td>' . $safeRow['discount'] . '</td>' .
+						'<td>' . $safeRow['stock'] . '</td>' .
+						'<td>' . $safeRow['unitPrice'] . '</td>' .
+						'<td>' . $safeRow['status'] . '</td>' .
+						'<td>' . $safeRow['description'] . '</td>' .
 					'</tr>';
 	}
 	

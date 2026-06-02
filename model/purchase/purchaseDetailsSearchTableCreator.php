@@ -31,16 +31,19 @@
 		$uPrice = $row['unitPrice'];
 		$qty = $row['quantity'];
 		$totalPrice = $uPrice * $qty;
+		$safeRow = array_map(function($value){
+			return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+		}, $row);
 		
 		$output .= '<tr>' .
-						'<td>' . $row['purchaseID'] . '</td>' .
-						'<td>' . $row['itemNumber'] . '</td>' .
-						'<td>' . $row['purchaseDate'] . '</td>' .
-						'<td>' . $row['itemName'] . '</td>' .
-						'<td>' . $row['unitPrice'] . '</td>' .
-						'<td>' . $row['quantity'] . '</td>' .
-						'<td>' . $row['vendorName'] . '</td>' .
-						'<td>' . $row['vendorID'] . '</td>' .
+						'<td>' . $safeRow['purchaseID'] . '</td>' .
+						'<td>' . $safeRow['itemNumber'] . '</td>' .
+						'<td>' . $safeRow['purchaseDate'] . '</td>' .
+						'<td>' . $safeRow['itemName'] . '</td>' .
+						'<td>' . $safeRow['unitPrice'] . '</td>' .
+						'<td>' . $safeRow['quantity'] . '</td>' .
+						'<td>' . $safeRow['vendorName'] . '</td>' .
+						'<td>' . $safeRow['vendorID'] . '</td>' .
 						'<td>' . $totalPrice . '</td>' .
 					'</tr>';
 	}
@@ -64,5 +67,4 @@
 				</table>';
 	echo $output;
 ?>
-
 

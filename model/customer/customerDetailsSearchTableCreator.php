@@ -25,17 +25,21 @@
 	
 	// Create table rows from the selected data
 	while($row = $customerDetailsSearchStatement->fetch(PDO::FETCH_ASSOC)){
+		$safeRow = array_map(function($value){
+			return htmlspecialchars((string)$value, ENT_QUOTES, 'UTF-8');
+		}, $row);
+
 		$output .= '<tr>' .
-						'<td>' . $row['customerID'] . '</td>' .
-						'<td>' . $row['fullName'] . '</td>' .
-						'<td>' . $row['email'] . '</td>' .
-						'<td>' . $row['mobile'] . '</td>' .
-						'<td>' . $row['phone2'] . '</td>' .
-						'<td>' . $row['address'] . '</td>' .
-						'<td>' . $row['address2'] . '</td>' .
-						'<td>' . $row['city'] . '</td>' .
-						'<td>' . $row['district'] . '</td>' .
-						'<td>' . $row['status'] . '</td>' .
+						'<td>' . $safeRow['customerID'] . '</td>' .
+						'<td>' . $safeRow['fullName'] . '</td>' .
+						'<td>' . $safeRow['email'] . '</td>' .
+						'<td>' . $safeRow['mobile'] . '</td>' .
+						'<td>' . $safeRow['phone2'] . '</td>' .
+						'<td>' . $safeRow['address'] . '</td>' .
+						'<td>' . $safeRow['address2'] . '</td>' .
+						'<td>' . $safeRow['city'] . '</td>' .
+						'<td>' . $safeRow['district'] . '</td>' .
+						'<td>' . $safeRow['status'] . '</td>' .
 					'</tr>';
 	}
 	

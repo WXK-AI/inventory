@@ -188,7 +188,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`userID`, `fullName`, `username`, `password`, `status`) VALUES
-(5, 'Guest', 'guest', '81dc9bdb52d04dc20036dbd8313ed055', 'Active');
+(5, 'Guest', 'guest', '$2y$12$hRtJxGgQgIvkjz1kZXKDoOqIU.LQOmXdYAYEvb5vJb9ptSUUyI4IW', 'Active');
 
 -- --------------------------------------------------------
 
